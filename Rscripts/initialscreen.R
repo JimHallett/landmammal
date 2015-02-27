@@ -50,7 +50,7 @@ smSubset[ order(smSubset$Year, smSubset$Species, smSubset$Sex, smSubset$Weight, 
 
 
 
-
+filter(smSubset, Species==SOVA, Site==MFC REG 4, Year==1993,sex==M)
 
 
 
