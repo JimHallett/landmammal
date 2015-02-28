@@ -14,7 +14,7 @@ close(channel)
 glimpse(sm)
 
 
-dim(sm)
+#dim(sm)
 
 sm$Year <- year(sm$Date)
 
