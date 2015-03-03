@@ -2,6 +2,7 @@ library(RODBC)
 library(tidyr)
 library(dplyr)
 library(lubridate)
+library(ggplot2)
 
 # Connect to external database
 
@@ -55,6 +56,7 @@ smSubsetMeans <- smSubset %>%
   group_by(Species, Sex) %>%
   summarise(meanWeight = mean(Weight))
   
+  
 
 arrange(smSubset, Year, Species, Sex, Weight, TotalBody)
 
@@ -69,4 +71,29 @@ firstmeantest <- group_by(smSubset, Species, Site, Year, Sex, mean(Weight, Total
 
 
 
+smSubsetMeans1 <- smSubset %>%
+ filter(Year==1993) %>%                                 
+ arrange(Species, Sex) %>%
+ group_by(Species, Sex) %>% 
+ summarise(meanWeight = mean(Weight), n = n())
 
+
+
+smSubsetMeansall <- smSubset %>%                                
+  arrange(Species, Sex, Year) %>%
+  group_by(Species, Sex, Year) %>% 
+  #summarise(meanWeight = mean(Weight), n = n()) %>%
+  
+  
+  
+ggplot(smSubset, aes(x=Weight, y=TotalBody)) + geom_point()
+
+
+
+
+
+
+
+
+
+  
