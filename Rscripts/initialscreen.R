@@ -86,8 +86,7 @@ smSubsetMeansall <- smSubset %>%
   
   
   
-ggplot(smSubset, aes(x=Weight, y=TotalBody)) + geom_point()
-
+ggplot(smSubset, aes(x=Weight, y=TotalBody)) + geom_point()+geom_smooth()+facet_wrap(~Sex)
 
 
 
