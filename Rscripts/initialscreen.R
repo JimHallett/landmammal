@@ -19,18 +19,23 @@ glimpse(sm)
 
 sm$Year <- year(sm$Date)
 
-smSubset <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody"))
+smSubset <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody")) %>%
+  filter(Sex=="M" | Sex=="F")
+  
+  smSubset$TotalBody <- as.numeric(smSubset$TotalBody)
+  
+  
 
-smSubset$TotalBody <- as.numeric(smSubset$TotalBody)
 
-table(smSubset$Species)
-Species.freq <- table(smSubset$Species)
+  table(smSubset$Species)
+  
+  Species.freq <- table(smSubset$Species) 
 
+  Species.Dates <- table(smSubset$Year)
 
+  Species.Dates.Species <- table(smSubset$Date, smSubset$Species)
 
-Species.Dates <- table(smSubset$Year)
-Species.Dates.Species <- table(smSubset$Date, smSubset$Species)
-dim(Species.Dates)
+  dim(Species.Dates)
 
 
 # table.obj <- table(smSubset$Species, smSubset$Year)
@@ -72,26 +77,55 @@ firstmeantest <- group_by(smSubset, Species, Site, Year, Sex, mean(Weight, Total
 
 
 smSubsetMeans1 <- smSubset %>%
- filter(Year==1993) %>%                                 
+ filter(Year==1993) %>%   
+
  arrange(Species, Sex) %>%
  group_by(Species, Sex) %>% 
  summarise(meanWeight = mean(Weight), n = n())
 
 
 
-smSubsetMeansall <- smSubset %>%                                
-  arrange(Species, Sex, Year) %>%
+smSubsetMeansall <- smSubset %>% 
+    arrange(Species, Sex, Year) %>%
   group_by(Species, Sex, Year) %>% 
   #summarise(meanWeight = mean(Weight), n = n()) %>%
   
   
   
-ggplot(smSubset, aes(x=Weight, y=TotalBody)) + geom_point()+geom_smooth()+facet_wrap(~Sex)
+ggplot(smSubset, aes(x=Weight, y=TotalBody)) + geom_point()+geom_smooth()+facet_wrap(Species~Sex)
 
 
 
+###############################################################################################################
+#Log Tansformations
+###############################################################################################################
 
 
+
+smSubsetPEMA <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody")) %>%
+  filter(Sex=="M" | Sex=="F") %>%
+  filter(Species=="PEMA")
+
+
+
+  ggplot(smSubsetPEMA, aes(x=Weight, y=TotalBody)) + geom_point()+geom_smooth()+facet_wrap(Species~Sex)+ scale_y_log10() + scale_x_log10()
+
+
+
+#log10 for all Species
+
+
+smSubsetFinal <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody")) %>%
+  filter(Sex=="M" | Sex=="F") %>%
+  filter(Species=="PEMA" | Species=="MILO" | Species=="MIMO" | Species=="MIPE" | Species=="MYGA" | Species=="PHIN" | Species=="THTA" | Species=="ZAPR")
+
+
+ggplot(smSubsetFinal, aes(x=Weight, y=TotalBody)) + 
+  geom_point() + geom_smooth() + facet_wrap(Species~Sex) + 
+  scale_y_log10() + scale_x_log10() +
+  xlab("Weight (g)") + ylab("Total Body Length (mm)") 
+
+  #expand_limits(x = 150, y = 50)
 
 
 
