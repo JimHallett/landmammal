@@ -107,13 +107,33 @@ smSubsetPEMA <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "
   filter(Species=="PEMA")
 
 
+<<<<<<< HEAD
+=======
 
   ggplot(smSubsetPEMA, aes(x=Weight, y=TotalBody)) + geom_point()+geom_smooth()+facet_wrap(Species~Sex)+ scale_y_log10() + scale_x_log10()
 
 
 
 #log10 for all Species
+>>>>>>> ff23f9319afec83483c700b21accbef1d86605fe
 
+  ggplot(smSubsetPEMA, aes(x=Weight, y=TotalBody)) + geom_point()+geom_smooth()+facet_wrap(Species~Sex)+ scale_y_log10() + scale_x_log10()
+
+smSubsetFinal <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody")) %>%
+  filter(Sex=="M" | Sex=="F") %>%
+  filter(Species=="PEMA" | Species=="MILO" | Species=="MIMO" | Species=="MIPE" | Species=="MYGA" | Species=="PHIN" | Species=="THTA" | Species=="ZAPR")
+
+
+<<<<<<< HEAD
+#log10 for all Species
+=======
+ggplot(smSubsetFinal, aes(x=Weight, y=TotalBody)) + 
+  geom_point() + geom_smooth() + facet_wrap(Species~Sex) + 
+  scale_y_log10() + scale_x_log10() +
+  xlab("Weight (g)") + ylab("Total Body Length (mm)") 
+>>>>>>> ff23f9319afec83483c700b21accbef1d86605fe
+
+  #expand_limits(x = 150, y = 50)
 
 smSubsetFinal <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody")) %>%
   filter(Sex=="M" | Sex=="F") %>%
