@@ -171,18 +171,9 @@ ggplot(filterPEMA, aes(x=Weight, y=TotalBody)) +
 #####################################################################
 
 
-Speciesplotslooptest <- function(x, na.rm = TRUE, ...) {
-  nm <- names(x)
-  for (i in filter(nm)) {
-    plots <-ggplot(filterPEMA, aes(x=Weight, y=TotalBody)) + 
-      geom_point() + geom_smooth() + facet_wrap(Sex~Year) + 
-      scale_y_log10() + scale_x_log10() +
-      xlab("Weight (g)") + ylab("Total Body Length (mm)")
-    ggsave(plots,filename=paste("myplot",nm[i],".png",sep=""))
-  }
-}
+SpeciesNames <- c("PEMA", "MILO", "MIMO", "MIPE","MYGA","PHIN","THTA","ZAPR")
 
-Speciesplotslooptest(df) ## execute function
+
 
 
 
