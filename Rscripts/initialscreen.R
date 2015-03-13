@@ -187,7 +187,7 @@ for(i in 1:8){
   SpeciesPlotAll <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody")) %>%
     filter(Year== 1993 | 1994 | 1995) %>%
     filter(Sex=="M" | Sex=="F") %>%
-    filter(Species=="1") %>%
+    filter(Species==specieslist[i]) 
   ggplot(SpeciesPlotAll, aes(x=Weight, y=TotalBody)) + 
     geom_point() + geom_smooth() + facet_wrap(Sex~Year) + 
     scale_y_log10() + scale_x_log10() +
