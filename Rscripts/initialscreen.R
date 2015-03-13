@@ -184,14 +184,17 @@ specieslist
 
 
 for(i in 1:12){
+  
   SpeciesPlotAll <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody")) %>%
     filter(Year== 1993 | 1994 | 1995) %>%
     filter(Sex=="M" | Sex=="F") %>%
     filter(Species==specieslist[i]) 
+  print(SpeciesPlotAll)
   print(ggplot(SpeciesPlotAll, aes(x=Weight, y=TotalBody)) + 
     geom_point() + geom_smooth() + facet_wrap(Sex~Year) + 
-    scale_y_log10() + scale_x_log10() +
+    scale_y_log10() + scale_x_log10() + ggtitle("Species") +
     xlab("Weight (g)") + ylab("Total Body Length (mm)"))
+
 }
 
 
