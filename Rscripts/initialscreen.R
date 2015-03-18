@@ -19,24 +19,24 @@ glimpse(sm)
 
 sm$Year <- year(sm$Date)
 
+# Creates new data set based on year
+
 smSubset <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Species", "Sex", "Weight", "TotalBody")) %>%
   filter(Sex=="M" | Sex=="F")
-  
+# Creates new data set that contains Site, LandNumber, Year, Station, Species, Sex, Weight, and Totalbody.
+# Only uses male and female entries. 
   smSubset$TotalBody <- as.numeric(smSubset$TotalBody)
   
-  
-
-
   table(smSubset$Species)
-  
+# Shows the number of entries for each species.  
   Species.freq <- table(smSubset$Species) 
-
+# Creates a Table object that shows the number of entries for each species.
   Species.Dates <- table(smSubset$Year)
-
+# Creates a Table object that shows the number of entries for each of the years.
   Species.Dates.Species <- table(smSubset$Date, smSubset$Species)
 
   dim(Species.Dates)
-
+# Gives the dimensions of "Species.Dates". 
 
 # table.obj <- table(smSubset$Species, smSubset$Year)
 # 
@@ -51,6 +51,7 @@ smSubset <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "Spec
 Species.obj <- table(smSubset$Species, smSubset$Year)
 
 
+
 #########################################################################################
 # Means Weight and TotalBody
 #########################################################################################
@@ -61,7 +62,8 @@ smSubsetMeans <- smSubset %>%
   group_by(Species, Sex) %>%
   summarise(meanWeight = mean(Weight))
   
-  
+# Creates data subset that is composed of all the entries from 1993 and isolates the columns "Species" and "Sex".
+# Then it groups the entries by "Species" and "Sex". And finaly it averages the weight of each species male and female.
 
 arrange(smSubset, Year, Species, Sex, Weight, TotalBody)
 
@@ -115,6 +117,7 @@ smSubsetPEMA <- subset(sm, select = c("Site", "LandNumber", "Year", "Station", "
 
 
 #log10 for all Species
+
 >>>>>>> ff23f9319afec83483c700b21accbef1d86605fe
 
   ggplot(smSubsetPEMA, aes(x=Weight, y=TotalBody)) + geom_point()+geom_smooth()+facet_wrap(Species~Sex)+ scale_y_log10() + scale_x_log10()
@@ -146,9 +149,7 @@ ggplot(smSubsetFinal, aes(x=Weight, y=TotalBody)) +
   xlab("Weight (g)") + ylab("Total Body Length (mm)") +
   
   
-  #geom_point(position = "jitter")
-  #expand_limits(x = c(50,100))
-  #scale_size_area()
+ 
 
 #############################################################
   #PEMA Subset
@@ -167,7 +168,7 @@ ggplot(filterPEMA, aes(x=Weight, y=TotalBody)) +
   xlab("Weight (g)") + ylab("Total Body Length (mm)")
 
 #####################################################################
-#Loop-da_loop!
+#Final loop for Spieces
 #####################################################################
 
 
@@ -190,13 +191,13 @@ for(i in 1:12){
     filter(Sex=="M" | Sex=="F") %>%
     filter(Species==specieslist[i]) 
   print(SpeciesPlotAll)
-  print(ggplot(SpeciesPlotAll, aes(x=Weight, y=TotalBody)) + 
+  print(ggplot(SpeciesPlotAll, aes(x=Weight, y=TotalBody, main=i)) + 
     geom_point() + geom_smooth() + facet_wrap(Sex~Year) + 
-    scale_y_log10() + scale_x_log10() + ggtitle("Species") +
-    xlab("Weight (g)") + ylab("Total Body Length (mm)"))
+    scale_y_log10() + scale_x_log10() + ggtitle(specieslist[i]) +
+    xlab("Weight (g)") + ylab("Total Body Length (mm)")) %>%
+    
 
 }
 
 
-
-
+# Creates a scatter plot of the weight and length for each species separated by sex and year.
